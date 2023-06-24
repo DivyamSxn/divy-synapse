@@ -1,0 +1,17 @@
+{
+	"name": "SQL_SCRIPT1",
+	"properties": {
+		"content": {
+			"query": "\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://divydatalake.dfs.core.windows.net/divy-storage/project_files/sql_file_18.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n    ) AS [result]\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
