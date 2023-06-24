@@ -1,0 +1,17 @@
+{
+	"name": "External_tbl_dedicated_pool",
+	"properties": {
+		"content": {
+			"query": "-- File FORMAT\n\nCREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] \nWITH ( FORMAT_TYPE = DELIMITEDTEXT ,\n\t\tFORMAT_OPTIONS (\n\t\t\tFIELD_TERMINATOR = ',',\n\t\t\tFIRST_ROW = 2,\n\t\t\tUSE_TYPE_DEFAULT = FALSE\n\t\t))\n\n-- Data Source\nCREATE EXTERNAL DATA SOURCE [divy-storage_divydatalake_dfs_core_windows_net] \nWITH (\n\tLOCATION = 'abfss://divy-storage@divydatalake.dfs.core.windows.net', \n\tTYPE = HADOOP \n)\n\n-- External Table Statement\n\n\nCREATE EXTERNAL TABLE test.divyam_tbl (\n\t[database] nvarchar(4000),\n\t[table] nvarchar(4000),\n\t[base_id] nvarchar(4000),\n\t[create] nvarchar(4000)\n\t)\n\tWITH (\n\tLOCATION = 'project_files/airtable_data_config.csv',\n\tDATA_SOURCE = [divy-storage_divydatalake_dfs_core_windows_net],\n\tFILE_FORMAT = [SynapseDelimitedTextFormat]\n\t)\n\n\n\nCREATE EXTERNAL TABLE test.divyam_tbl_1 (\n\tID NVARCHAR(4000),\n\tLAST_DATE NVARCHAR(4000)\n\t)\n\tWITH (\n\tLOCATION = 'project_files/sql_file_18.csv',\n\tDATA_SOURCE = [divy-storage_divydatalake_dfs_core_windows_net],\n\tFILE_FORMAT = [SynapseDelimitedTextFormat]\n\t)\n\nSELECT *\nFROM test.divyam_tbl_1\nwhere [database] = 'spain_development'\nGO\n\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "divy_dedicated_db",
+				"poolName": "divy_dedicated_db"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
