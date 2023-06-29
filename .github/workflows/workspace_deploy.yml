@@ -4,7 +4,7 @@
       TargetWorkspaceName: 'divy-synapse-ws-prod'
       TemplateFile: './divy-synapse-ws/TemplateForWorkspace.json'
       ParametersFile: './divy-synapse-ws/TemplateParametersForWorkspace.json'
-      OverrideArmParameters: './divy-synapse/.github/workflows/workspace_publish.yaml'
+      OverrideArmParameters: './divy-synapse/.github/workflows/workspace_deploy.yaml'
       environment: 'Azure Public'
       resourceGroup: 'divy_proj'
       clientId: ${{ secrets.CLIENTID }}
