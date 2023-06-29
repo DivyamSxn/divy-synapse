@@ -1,0 +1,26 @@
+name: workspace deployment
+
+on:
+    push:
+        branches: [workspace_publish]
+jobs:
+    release:
+        # You also can use the self-hosted runners.
+        runs-on: windows-latest
+        steps:
+            # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it.
+            - uses: actions/checkout@v2
+            - uses: azure/synapse-workspace-deployment@release-1.0
+            with:
+              TargetWorkspaceName: 'divy-synapse-ws-prod'
+              TemplateFile: './divy-synapse-ws/TemplateForWorkspace.json'
+              ParametersFile: './divy-synapse-ws/TemplateParametersForWorkspace.json'
+              OverrideArmParameters: './divy-synapse/.github/workflows/workspace_publish.yaml'
+              environment: 'Azure Public'
+              resourceGroup: 'divy_proj'
+              clientId: ${{secrets.CLIENTID}}
+              clientSecret:  ${{secrets.CLIENTSECRET}}
+              subscriptionId: ${{secrets.SUBSCRIPTIONID}}
+              tenantId: ${{secrets.TENANTID}}
+              DeleteArtifactsNotInTemplate: 'true'
+              managedIdentity: 'False'
