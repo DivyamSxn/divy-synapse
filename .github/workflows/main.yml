@@ -28,6 +28,7 @@
 #           tenantId: ${{ secrets.TENANTID }}
 #           DeleteArtifactsNotInTemplate: 'true'
 #           managedIdentity: 'False'
+
 name: Test Workflow
 
 on:
@@ -37,19 +38,24 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: deploy synapse ws
+        uses: azure/synapse-workspace-deployment@release-1.0
         with:
-          node-version: 14
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
+          TargetWorkspaceName: 'divy-synapse-ws-prod'
+          TemplateFile: './divy-synapse-ws/TemplateForWorkspace.json'
+          ParametersFile: './divy-synapse-ws/TemplateParametersForWorkspace.json'
+          OverrideArmParameters: './divy-synapse/.github/workflows/main.yaml'
+          environment: 'Azure Public'
+          resourceGroup: 'divy_proj'
+          clientId: ${{ secrets.CLIENTID }}
+          clientSecret: ${{ secrets.CLIENTSECRET }}
+          subscriptionId: ${{ secrets.SUBSCRIPTIONID }}
+          tenantId: ${{ secrets.TENANTID }}
+          DeleteArtifactsNotInTemplate: 'true'
+          managedIdentity: 'False'
